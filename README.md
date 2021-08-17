@@ -59,7 +59,7 @@ message(" BINARY DIR:" ${PROJECT_SOURCE_DIR}/bin)
 
 link_directories(${PROJECT_SOURCE_DIR}/bin)
 
-# 添加可执行文件
+# add executable file
 add_executable(test-linkedlist test-linkedlist.cpp)
 ```
 
