@@ -8,6 +8,8 @@ CMake is good
   - [compile executable file](#compile-executable-file)
   - [compile dynamic link library](#compile-dynamic-link-library)
   - [compile static link library](#compile-static-link-library)
+  - [compile 3rd-party](#compile-3rd-party)
+    - [Opencv](#opencv)
 - [Clang-Format](#clang-format)
   - [Download](#download)
   - [Usage](#usage)
@@ -50,29 +52,39 @@ cd ../bin
 # CMake
 ## global configuration
 ## compile executable file
-[app/CMakeLists.txt](app/CMakeLists.txt) configurate how to compile an executable file
-```cmake
-include_directories(${PROJECT_SOURCE_DIR}/include)
+see directory [`exe`](exe) for detail that how to compile an **executable file**
 
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-message(" BINARY DIR:" ${PROJECT_SOURCE_DIR}/bin)
-
-link_directories(${PROJECT_SOURCE_DIR}/bin)
-
-# add executable file
-add_executable(test-linkedlist test-linkedlist.cpp)
-```
-
-```cmake
-file(COPY ${PROJECT_SOURCE_DIR}/tools/mingw64/bin/libstdc++-6.dll DESTINATION ${PROJECT_SOURCE_DIR}/bin FOLLOW_SYMLINK_CHAIN)
-file(COPY ${PROJECT_SOURCE_DIR}/tools/mingw64/bin/libwinpthread-1.dll DESTINATION ${PROJECT_SOURCE_DIR}/bin FOLLOW_SYMLINK_CHAIN)
-file(COPY ${PROJECT_SOURCE_DIR}/tools/mingw64/bin/libgcc_s_seh-1.dll DESTINATION ${PROJECT_SOURCE_DIR}/bin FOLLOW_SYMLINK_CHAIN)
-```
 
 ## compile dynamic link library
+see directory [`dynamic-library`](dynamic-library) for details that how to compile **dynamic link library**
 ## compile static link library
+see directory [`static-library`](static-library) for detail that how to compile **static link library**
 
+## compile 3rd-party
+### Opencv
+Download the same version of [opencv](https://github.com/opencv/opencv) and [opencv_contrib](https://github.com/opencv/opencv_contrib) in Releases or[Mirrors](https://www.bzblog.online/opencv/)
 
+Compile from source:
+- [OpenCV compile configuration options reference](https://docs.opencv.org/4.5.2/db/d05/tutorial_config_reference.html)
+- [Compile by Cmake](https://docs.opencv.org/4.5.2/d7/d9f/tutorial_linux_install.html)
+```bash
+cd opencv-4.5.2
+mkdir build
+cd build
+cmake .. ^
+    -G "MinGW Makefiles" ^
+    -DCMAKE_INSTALL_PREFX=C:/Users/Henryzhu/Programs/opencv ^
+    -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-4.5.2/modules ^
+    -DCMAKE_BUILD_TYPE=Release ^
+    -DOPENCV_GENERATE_PKGCONFIG=ON ^
+    -DBUILD_SHARED_LIBS=OFF^
+    -DWITH_CUDA=OFF ^
+    -DOPENCV_DNN_CUDA=OFF ^
+    -DWITH_ONNX=ON ^
+    -DWITH_1394=OFF
+
+make -j8
+```
 # Clang-Format
 ## Download
 In [LLVM](https://llvm.org/builds/) official website, 
@@ -101,11 +113,13 @@ clang-format -i test.c
 
 see [Clang documentation](https://clang.llvm.org/docs/ClangFormat.html) for more detail of using Clang-Format
 
+
+
 # git
 in file `.git/config`
 ```bash
 [remote "origin"]
-	url = https://gitee.com/<用户名>/<仓库名字>.git
-	url = https://github.com/<用户名>/<仓库名字>.git
+	url = https://gitee.com/<user_name>/<repo_name>.git
+	url = https://github.com/<user_name>/<repo_name>.git
 	fetch = +refs/heads/*:refs/remotes/origin/*
 ```

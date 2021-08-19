@@ -1,7 +1,10 @@
 # 
 tools/*
-bin
-build
+3rd-party/*
+
+*/bin
+*/lib
+*/build
 
 # Prerequisites
 *.d

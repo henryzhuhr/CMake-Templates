@@ -5,6 +5,7 @@
         "**/.hg": true,
         "**/.DS_Store": true
     },
+
     "files.associations": {
         "*.md": "markdown",
         "*.cjson": "jsonc",
