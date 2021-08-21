@@ -3,8 +3,6 @@ tools/*
 
 # 3rd-party
 3rd-party/*
-!3rd-party/opencv/build-opencv.bat
-
 
 */bin
 */lib
