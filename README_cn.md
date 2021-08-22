@@ -5,9 +5,9 @@
 - [CMake](#cmake)
 - [CMake模板](#cmake模板)
   - [全局配置](#全局配置)
-  - [compile executable file](#compile-executable-file)
-  - [compile dynamic link library](#compile-dynamic-link-library)
-  - [compile static link library](#compile-static-link-library)
+  - [编译可执行文件](#编译可执行文件)
+  - [编译动态链接库](#编译动态链接库)
+  - [编译静态链接库](#编译静态链接库)
   - [编译一些有用的第三方库](#编译一些有用的第三方库)
     - [gflags](#gflags)
     - [Opencv](#opencv)
@@ -38,9 +38,9 @@
 ├─src               # 源文件
 ├─tools             # 编译工具链（也可以将工具链添加到系统环境变量中）
 ├─.clang-format     # clang-format 文件（代码自动格式化工具）
-├─build.ps1         # build script in powershell
-├─build.sh          # build script in bash
-├─CMakeLists.txt    # CMake configuration
+├─build.bat         # bat 编译脚本
+├─build.sh          # shell 编译脚本
+├─CMakeLists.txt    # 根目录的CMake配置文件
 └─README.md
 ```
 
@@ -65,13 +65,14 @@ set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 add_subdirectory(src)
 add_subdirectory(app)
 ```
-## compile executable file
+## 编译可执行文件
 see directory [`exe`](exe) for detail that how to compile an **executable file**
 
 
-## compile dynamic link library
+## 编译动态链接库
 see directory [`dynamic-library`](dynamic-library) for details that how to compile **dynamic link library**
-## compile static link library
+
+## 编译静态链接库
 see directory [`static-library`](static-library) for detail that how to compile **static link library**
 
 ## 编译一些有用的第三方库
@@ -80,8 +81,8 @@ download gflags in [GitHub](https://github.com/gflags/gflags), see ["Installing 
 
 ### Opencv
 
-
 在 [Github](https://github.com/opencv) 上下载相同版本的 [opencv](https://github.com/opencv/opencv) 和 [opencv_contrib](https://github.com/opencv/opencv_contrib) 源码的Release版本
+
 > OpenCV下载较慢，可以选择在国内[镜像](https://www.bzblog.online/opencv/)里面下载（版本并不一定是最新的）
 
 对于OpenCV，我们选择从源码编译的方式。源码编译采用CMake，确保设备上安装了下面依赖：
@@ -91,7 +92,7 @@ download gflags in [GitHub](https://github.com/gflags/gflags), see ["Installing 
 
 源码编译可以参考官方的编译教程 [Installation in Linux](https://docs.opencv.org/4.5.2/d7/d9f/tutorial_linux_install.html) ，在用CMake构建项目时，需要进行编译选项的配置，这些配置可以参考 [OpenCV compile configuration options reference](https://docs.opencv.org/4.5.2/db/d05/tutorial_config_reference.html) 。
 
-下载完成后，请将 [opencv](https://github.com/opencv/opencv) 和 [opencv_contrib](https://github.com/opencv/opencv_contrib) 解压放置到同一目录下，然后将 [docs/opencv](docs/opencv) 下的脚本文件，复制到与两个源码相同目录下
+下载完成后，请将 [opencv](https://github.com/opencv/opencv) 和 [opencv_contrib](https://github.com/opencv/opencv_contrib) 解压放置到同一目录下，并且新建一个`download`目录，然后将 [docs/opencv](docs/opencv) 下的脚本文件，复制到相同目录下
 
 例如在当前项目中的 [3rd-party](3rd-party) 目录下创建 [opencv](3rd-party/opencv) 目录
 ```bash
@@ -117,7 +118,7 @@ cd build
 cmake .. -G "MinGW Makefiles" -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-4.5.2/modules
 ```
 
-在上述cmake构建项目的过程中，你会在终端看到一些“不和谐”的输出
+在上述cmake构建项目的过程中，你会在终端看到一些“不和谐”的输出：
 ```bash
 -- FFMPEG: Download: ffmpeg_version.cmake
 -- Try 1 failed
@@ -161,10 +162,34 @@ Call Stack (most recent call first):
 # Closing connection 0
 # 
 ```
-找到 `do_copy`，会看到需要下载的文件`ffmpeg_version.cmake`，以及下载链接`https://raw.githubusercontent.com/opencv/opencv_3rdparty/213fcd5d4897319a83207406036c4a5957fba010/ffmpeg/ffmpeg_version.cmake`，并且可以看到需要将该文件放置到目录下`.../CMake/3rd-party/opencv/opencv-4.5.3/build/3rdparty/ffmpeg`
+找到 `#do_copy` 一行，会看到需要下载的文件`ffmpeg_version.cmake`，以及下载链接`https://raw.githubusercontent.com/.../ffmpeg_version.cmake`，并且可以看到需要将该文件放置到目录下`.../build/3rdparty/ffmpeg`
 
 通常会有如下文件需要下载：
-- [v0.1.1f.zip](https://github.com/opencv/ade/archive/v0.1.1f.zip): `build/3rdparty/ade/v0.1.1f`
+| 需要下载的文件及其链接                                                                                                                                                | 放置的位置                                             |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------- |
+| [v0.1.1f.zip](https://github.com/opencv/ade/archive/v0.1.1f.zip)                                                                                                      | build/3rdparty/ade/v0.1.1f                             |
+| [opencv_videoio_ffmpeg.dll](https://raw.githubusercontent.com/opencv/opencv_3rdparty/629590c3ba09fb0c8eaa9ab858ff13d3a84ca1aa/ffmpeg/opencv_videoio_ffmpeg.dll)       | `build/3rdparty/ffmpeg/opencv_videoio_ffmpeg.dll`      |
+| [opencv_videoio_ffmpeg_64.dll](https://raw.githubusercontent.com/opencv/opencv_3rdparty/629590c3ba09fb0c8eaa9ab858ff13d3a84ca1aa/ffmpeg/opencv_videoio_ffmpeg_64.dll) | `build/3rdparty/ffmpeg/opencv_videoio_ffmpeg_64.dll`   |
+| [ffmpeg_version.cmake](https://raw.githubusercontent.com/opencv/opencv_3rdparty/629590c3ba09fb0c8eaa9ab858ff13d3a84ca1aa/ffmpeg/ffmpeg_version.cmake)                 | `build/3rdparty/ffmpeg/ffmpeg_version.cmake`           |
+| [detect.caffemodel](https://raw.githubusercontent.com/WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/detect.caffemodel)                            | `build/downloads/wechat_qrcode/detect.caffemodel`      |
+| [detect.prototxt](https://raw.githubusercontent.com/WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/detect.prototxt)                                | `build/downloads/wechat_qrcode/detect.prototxt`        |
+| [sr.caffemodel](https://raw.githubusercontent.com/WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/sr.caffemodel)                                    | `build/downloads/wechat_qrcode/sr.caffemodel`          |
+| [sr.prototxt](https://raw.githubusercontent.com/WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/sr.prototxt)                                        | `build/downloads/wechat_qrcode`                        |
+| [boostdesc_bgm.i](https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_bgm.i)                                  | `build/downloads/xfeatures2d/boostdesc_bgm.i`          |
+| [boostdesc_bgm_bi.i](https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_bgm_bi.i)                            | `build/downloads/xfeatures2d/boostdesc_bgm_bi.i`       |
+| [boostdesc_bgm_hd.i](https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_bgm_hd.i)                            | `build/downloads/xfeatures2d/boostdesc_bgm_hd.i`       |
+| [boostdesc_binboost_064.i](https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_binboost_064.i)                | `build/downloads/xfeatures2d/boostdesc_binboost_064.i` |
+| [boostdesc_binboost_128.i](https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_binboost_128.i)                | `build/downloads/xfeatures2d/boostdesc_binboost_128.i` |
+| [boostdesc_binboost_256.i](https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_binboost_256.i)                | `build/downloads/xfeatures2d/boostdesc_binboost_256.i` |
+| [boostdesc_lbgm.i](https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_lbgm.i)                                | `build/downloads/xfeatures2d/boostdesc_lbgm.i`         |
+| [vgg_generated_48.i](https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_48.i)                            | `build/downloads/xfeatures2d/vgg_generated_48.i`       |
+| [vgg_generated_64.i](https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_64.i)                            | `build/downloads/xfeatures2d/vgg_generated_64.i`       |
+| [vgg_generated_80.i](https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_80.i)                            | `build/downloads/xfeatures2d/vgg_generated_80.i`       |
+| [vgg_generated_120.i](https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_120.i)                          | `build/downloads/xfeatures2d/vgg_generated_120.i`      |
+| [face_landmark_model.dat](https://raw.githubusercontent.com/opencv/opencv_3rdparty/8afa57abc8229d611c4937165d20e2a2d9fc5a12/face_landmark_model.dat)                  | `build/testdata/cv/face//face_landmark_model.dat`      |
+
+<!-- 
+- [v0.1.1f.zip](https://github.com/opencv/ade/archive/v0.1.1f.zip): 解压到 `build/3rdparty/ade/v0.1.1f`
 - [opencv_videoio_ffmpeg.dll](https://raw.githubusercontent.com/opencv/opencv_3rdparty/629590c3ba09fb0c8eaa9ab858ff13d3a84ca1aa/ffmpeg/opencv_videoio_ffmpeg.dll): `build/3rdparty/ffmpeg/opencv_videoio_ffmpeg.dll`
 - [opencv_videoio_ffmpeg_64.dll](https://raw.githubusercontent.com/opencv/opencv_3rdparty/629590c3ba09fb0c8eaa9ab858ff13d3a84ca1aa/ffmpeg/opencv_videoio_ffmpeg_64.dll): `build/3rdparty/ffmpeg/opencv_videoio_ffmpeg_64.dll`
 - [ffmpeg_version.cmake](https://raw.githubusercontent.com/opencv/opencv_3rdparty/629590c3ba09fb0c8eaa9ab858ff13d3a84ca1aa/ffmpeg/ffmpeg_version.cmake): `build/3rdparty/ffmpeg/ffmpeg_version.cmake`
@@ -183,16 +208,17 @@ Call Stack (most recent call first):
 - [vgg_generated_64.i](https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_64.i): `build/downloads/xfeatures2d/vgg_generated_64.i`
 - [vgg_generated_80.i](https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_80.i): `build/downloads/xfeatures2d/vgg_generated_80.i`
 - [vgg_generated_120.i](https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_120.i): `build/downloads/xfeatures2d/vgg_generated_120.i`
-- [face_landmark_model.dat](https://raw.githubusercontent.com/opencv/opencv_3rdparty/8afa57abc8229d611c4937165d20e2a2d9fc5a12/face_landmark_model.dat): `build/testdata/cv/face//face_landmark_model.dat`
+- [face_landmark_model.dat](https://raw.githubusercontent.com/opencv/opencv_3rdparty/8afa57abc8229d611c4937165d20e2a2d9fc5a12/face_landmark_model.dat): `build/testdata/cv/face//face_landmark_model.dat` 
+ -->
 
 如果将上述文件下载后，放置到与编译脚本 `build-opencv.*` 同级的目录 `download` 下，就可以很方便的用脚本进行编译
 
-编译前请仔细查看[编译脚本](docs/opencv/build-opencv.sh)，需要修改：
+编译前请仔细查看[编译脚本`opencv/build-opencv.*`](docs/opencv/build-opencv.sh)，需要修改：
 - OpenCV的版本 `OPENCV_VERSION`
 - CMake的编译选项 `-D`，例如：
   - `-D CMAKE_INSTALL_PREFIX=~/Programs/opencv`: **Opencv需要安装的位置**（这里推荐安装到用户目录下），便于之后CMake项目链接OpenCV库
   - `-D BUILD_opencv_python2=OFF`,`-D BUILD_opencv_python3=OFF`: 该项目不编译python版本的opencv，如果需要为python安装opencv，建议`pip3 install opencv-python`，如果需要处理与视频相关的操作，那么才需要用该项目编译python版本的opencv
-  - 。。。其他的编译选项参考 [OpenCV compile configuration options reference](https://docs.opencv.org/4.5.2/db/d05/tutorial_config_reference.html) 
+  - ... (更多编译选项参考 [OpenCV compile configuration options reference](https://docs.opencv.org/4.5.2/db/d05/tutorial_config_reference.html))
 - 编译使用的线程数`-j`，默认是8线程编译`make -j8`，根据电脑配置进行修改，单线程则是`make`，十六线程则是`make -j16`
 ```bash
 OPENCV_VERSION=4.5.1
