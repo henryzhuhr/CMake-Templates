@@ -83,8 +83,7 @@ download gflags in [GitHub](https://github.com/gflags/gflags), see ["Installing 
 
 在 [Github](https://github.com/opencv) 上下载相同版本的 [opencv](https://github.com/opencv/opencv) 和 [opencv_contrib](https://github.com/opencv/opencv_contrib) 源码的Release版本
 
-> 下面是基于Opencv 4.5.1版本进行的
-
+> 下面是基于Opencv 4.5.3版本进行的。能够成功编译 ![Opencv-v4.5.1](https://img.shields.io/badge/Opencv-v4.5.1-blue)![Opencv-v4.5.3](https://img.shields.io/badge/Opencv-v4.5.3-bl
 > OpenCV下载较慢，可以选择在国内[镜像](https://www.bzblog.online/opencv/)里面下载（版本并不一定是最新的）
 
 对于OpenCV，我们选择从源码编译的方式。源码编译采用CMake，确保设备上安装了下面依赖：
@@ -272,6 +271,21 @@ make install
   bash build-opencv.sh
   ```
 
+编译完成之后需要检查安装目录，也就是编译选项中的`CMAKE_INSTALL_PREFIX` (`~/Programs/opencv`)，安装目录应该如下：
+```bash
+C:.
+├─bin
+├─etc
+├─include
+├─x64
+├─LICENSE
+├─OpenCVConfig.cmake
+├─OpenCVConfig-version.cmake
+└─setup_vars_opencv4.cmd
+```
+其中`OpenCVConfig.cmake`和`OpenCVConfig-version.cmake`是非常重要的两个文件，CMake能够链接到OpenCV库就是寻找这两个文件。`setup_vars_opencv4.cmd`是设置OpenCV环境变量的脚本
+
+在CＭake项目中使用参考 [Cmake+OpenCV 模板](templates/with-opencv)
 
 # 常见的工具
 ## Clang-Format
