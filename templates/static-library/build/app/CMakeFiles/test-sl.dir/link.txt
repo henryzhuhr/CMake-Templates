@@ -1,0 +1,3 @@
+C:\Users\Henryzhu\Programs\CMake\cmake-3.21.1-windows-x86_64\bin\cmake.exe -E rm -f CMakeFiles\test-sl.dir/objects.a
+C:\Users\Henryzhu\Programs\mingw64\bin\ar.exe qc CMakeFiles\test-sl.dir/objects.a @CMakeFiles\test-sl.dir\objects1.rsp
+g++ -g -fexec-charset=utf-8 -m64   -O3 -Wall -Wl,--whole-archive CMakeFiles\test-sl.dir/objects.a -Wl,--no-whole-archive -o ..\..\bin\test-sl.exe -Wl,--out-implib,..\..\bin\libtest-sl.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\test-sl.dir\linklibs.rsp

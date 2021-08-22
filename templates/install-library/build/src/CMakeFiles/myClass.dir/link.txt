@@ -1,0 +1,2 @@
+C:\Users\Henryzhu\Programs\mingw64\bin\ar.exe qc libmyClass.a CMakeFiles/myClass.dir/myClass.cpp.obj
+C:\Users\Henryzhu\Programs\mingw64\bin\ranlib.exe libmyClass.a

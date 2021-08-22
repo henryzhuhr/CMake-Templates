@@ -1,0 +1,3 @@
+C:\Users\Henryzhu\Programs\CMake\cmake-3.21.1-windows-x86_64\bin\cmake.exe -E rm -f CMakeFiles\myClass.dir/objects.a
+C:\Users\Henryzhu\Programs\mingw64\bin\ar.exe qc CMakeFiles\myClass.dir/objects.a @CMakeFiles\myClass.dir\objects1.rsp
+g++ -g -fexec-charset=utf-8 -m64  -shared -o ..\..\bin\libmyClass.dll -Wl,--out-implib,..\..\bin\libmyClass.dll.a -Wl,--major-image-version,0,--minor-image-version,0 -Wl,--whole-archive CMakeFiles\myClass.dir/objects.a -Wl,--no-whole-archive @CMakeFiles\myClass.dir\linklibs.rsp
