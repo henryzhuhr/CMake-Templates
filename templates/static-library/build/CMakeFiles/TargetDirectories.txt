@@ -1,5 +1,0 @@
-C:/Users/Henryzhu/project/CMake/static-library/build/CMakeFiles/edit_cache.dir
-C:/Users/Henryzhu/project/CMake/static-library/build/CMakeFiles/rebuild_cache.dir
-C:/Users/Henryzhu/project/CMake/static-library/build/app/CMakeFiles/test-sl.dir
-C:/Users/Henryzhu/project/CMake/static-library/build/app/CMakeFiles/edit_cache.dir
-C:/Users/Henryzhu/project/CMake/static-library/build/app/CMakeFiles/rebuild_cache.dir

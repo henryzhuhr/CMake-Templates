@@ -1,3 +1,0 @@
-C:/Users/Henryzhu/project/CMake/install-library/dist/Release/lib/libmyClass.dll.a
-C:/Users/Henryzhu/project/CMake/install-library/dist/Release/bin/libmyClass.dll
-C:/Users/Henryzhu/project/CMake/install-library/dist/Release/lib/libmyClass.a

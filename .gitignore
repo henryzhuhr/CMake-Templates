@@ -4,9 +4,12 @@ tools/*
 # 3rd-party
 3rd-party/*
 
-*/bin
-*/lib
-*/build
+bin
+lib
+build
+templates/**/bin
+templates/**/build
+templates/**/lib
 
 # Prerequisites
 *.d
