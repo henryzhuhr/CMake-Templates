@@ -83,6 +83,8 @@ download gflags in [GitHub](https://github.com/gflags/gflags), see ["Installing 
 
 在 [Github](https://github.com/opencv) 上下载相同版本的 [opencv](https://github.com/opencv/opencv) 和 [opencv_contrib](https://github.com/opencv/opencv_contrib) 源码的Release版本
 
+> 下面是基于Opencv 4.5.1版本进行的
+
 > OpenCV下载较慢，可以选择在国内[镜像](https://www.bzblog.online/opencv/)里面下载（版本并不一定是最新的）
 
 对于OpenCV，我们选择从源码编译的方式。源码编译采用CMake，确保设备上安装了下面依赖：
