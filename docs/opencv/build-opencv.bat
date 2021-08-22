@@ -1,4 +1,6 @@
-cd opencv-4.5.2
+set OPENCV_VERSION=4.5.1
+
+cd opencv-%OPENCV_VERSION%
 
 md build
 
@@ -20,13 +22,13 @@ cd build
 
 cmake .. ^
     -G "MinGW Makefiles" ^
-    -D CMAKE_INSTALL_PREFIX=C:/Users/Henryzhu/Programs/opencv ^
-    -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-4.5.2/modules ^
+    -D CMAKE_INSTALL_PREFIX=~/Programs/opencv ^
+    -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-%OPENCV_VERSION%/modules ^
+    -D OPENCV_GENERATE_PKGCONFIG=ON ^
     -D CMAKE_BUILD_TYPE=Release ^
     -DBUILD_opencv_python2=OFF ^
     -DBUILD_opencv_python3=OFF ^
-    -D OPENCV_GENERATE_PKGCONFIG=ON ^
-    -D BUILD_SHARED_LIBS=OFF^
+    -D BUILD_SHARED_LIBS=ON^
     -D WITH_CUDA=ON ^
     -D OPENCV_DNN_CUDA=ON ^
     -D WITH_ONNX=ON ^

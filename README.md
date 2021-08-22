@@ -1,9 +1,11 @@
-# CMake
+# CMake-Templates
+[English](README.md) | [简体中文](README_cn.md)
+
 CMake is good
-- [CMake](#cmake)
+- [CMake-Templates](#cmake-templates)
 - [Compile the project](#compile-the-project)
 - [Directory Structure](#directory-structure)
-- [CMake](#cmake-1)
+- [CMake](#cmake)
   - [global configuration](#global-configuration)
   - [compile executable file](#compile-executable-file)
   - [compile dynamic link library](#compile-dynamic-link-library)
@@ -15,6 +17,7 @@ CMake is good
   - [Download](#download)
   - [Usage](#usage)
 - [git](#git)
+- [Wget](#wget)
 
 # Compile the project
 - build && compile
@@ -170,3 +173,10 @@ in file `.git/config`
 	url = https://github.com/<user_name>/<repo_name>.git
 	fetch = +refs/heads/*:refs/remotes/origin/*
 ```
+
+# Wget
+
+A command-line utility for retrieving files using HTTP, HTTPS and FTP protocols.
+
+Download:
+- [Windows binaries of GNU Wget](https://eternallybored.org/misc/wget/) (Downloading ZIP and add to system PATH is recommended.)
