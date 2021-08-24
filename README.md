@@ -1,8 +1,9 @@
-# CMake-Templates
-[English](README.md) | [简体中文](README_cn.md)
+# CMake-Templates!
+[![Englis](https://img.shields.io/badge/README-English-red)](README.md)
+[![简体中文](https://img.shields.io/badge/README-简体中文-blue)](README_cn.md)
 
 CMake is good
-- [CMake-Templates](#cmake-templates)
+- [CMake-Templates!](#cmake-templates)
 - [Compile the project](#compile-the-project)
 - [Directory Structure](#directory-structure)
 - [CMake](#cmake)

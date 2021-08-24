@@ -1,4 +1,7 @@
 # CMake-Templates
+[![Englis](https://img.shields.io/badge/README-English-red)](README.md)
+[![简体中文](https://img.shields.io/badge/README-简体中文-blue)](README_cn.md)
+
 这是一个 CMake 模板库
 
 - [CMake-Templates](#cmake-templates)
