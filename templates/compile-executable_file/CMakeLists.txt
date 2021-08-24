@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(BASE_CMAKE)
+project(Compile_Executable_File LANGUAGES CXX)
 
 # ==================================
 #   C/CXX  standard
