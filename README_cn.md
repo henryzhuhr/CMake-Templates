@@ -11,6 +11,9 @@
   - [编译一些有用的第三方库](#编译一些有用的第三方库)
     - [gflags](#gflags)
     - [Opencv](#opencv)
+      - [为 Linux 编译 Opencv](#为-linux-编译-opencv)
+      - [为 MacOS 编译 Opencv](#为-macos-编译-opencv)
+      - [为 Windows 编译 Opencv](#为-windows-编译-opencv)
 - [常见的工具](#常见的工具)
   - [Clang-Format](#clang-format)
     - [Download](#download)
@@ -80,27 +83,36 @@ see directory [`static-library`](static-library) for detail that how to compile 
 download gflags in [GitHub](https://github.com/gflags/gflags), see ["Installing a binary distribution package"](https://github.com/gflags/gflags/blob/master/INSTALL.md)
 
 ### Opencv
-
-在 [Github](https://github.com/opencv) 上下载相同版本的 [opencv](https://github.com/opencv/opencv) 和 [opencv_contrib](https://github.com/opencv/opencv_contrib) 源码的Release版本
-
-> 下面是基于Opencv 4.5.3版本进行的。能够成功编译 ![Opencv-v4.5.1](https://img.shields.io/badge/Opencv-v4.5.1-blue)![Opencv-v4.5.3](https://img.shields.io/badge/Opencv-v4.5.3-bl
-> OpenCV下载较慢，可以选择在国内[镜像](https://www.bzblog.online/opencv/)里面下载（版本并不一定是最新的）
-
 对于OpenCV，我们选择从源码编译的方式。源码编译采用CMake，确保设备上安装了下面依赖：
 - [CMake](https://cmake.org/download/)
 - g++
 - wget
 
-源码编译可以参考官方的编译教程 [Installation in Linux](https://docs.opencv.org/4.5.2/d7/d9f/tutorial_linux_install.html) ，在用CMake构建项目时，需要进行编译选项的配置，这些配置可以参考 [OpenCV compile configuration options reference](https://docs.opencv.org/4.5.2/db/d05/tutorial_config_reference.html) 。
+
+在 [Github](https://github.com/opencv) 上下载相同版本的 [opencv](https://github.com/opencv/opencv) 和 [opencv_contrib](https://github.com/opencv/opencv_contrib) 源码的**Release版本**
+
+> OpenCV下载较慢，可以选择在国内[镜像](https://www.bzblog.online/opencv/)里面下载（版本并不一定是最新的）
+
+下面是基于Opencv 4.5.3版本进行的。
+
+已经测试过可以编译的版本:
+![Opencv-v4.5.1](https://img.shields.io/badge/Opencv-v4.5.1-blue)
+![Opencv-v4.5.3](https://img.shields.io/badge/Opencv-v4.5.3-blue)
+
+
+
+**源码编译可以参考官方的编译教程 [Installation in Linux](https://docs.opencv.org/4.5.2/d7/d9f/tutorial_linux_install.html)。**
+
+在用CMake构建项目时，需要进行编译选项的配置，这些配置可以参考 [OpenCV compile configuration options reference](https://docs.opencv.org/4.5.2/db/d05/tutorial_config_reference.html) 。有一些编译选项在官方也并没有列举出来，那么这时候，为了查看完整的编译选项，可以使用`cmake-gui`来构建项目，并且可以查看当前版本下全部编译选项。
 
 下载完成后，请将 [opencv](https://github.com/opencv/opencv) 和 [opencv_contrib](https://github.com/opencv/opencv_contrib) 解压放置到同一目录下，并且新建一个`download`目录，然后将 [docs/opencv](docs/opencv) 下的脚本文件，复制到相同目录下
 
-例如在当前项目中的 [3rd-party](3rd-party) 目录下创建 [opencv](3rd-party/opencv) 目录
+例如在当前项目中的 [3rd-party](3rd-party) 目录下创建 [opencv](3rd-party/opencv) 目录（使用powershell脚本）
 ```bash
 mkdir 3rd-party/opencv
 cd 3rd-party/opencv
 ```
-那么 [`3rd-party/opencv`](3rd-party/opencv) 的目录结构为
+那么 [`3rd-party/opencv`](3rd-party/opencv) 的目录结构为，`<OpenCV_VERSION>`需要修改为需要编译的opencv的版本
 ```bash
 .
 ├─download
@@ -111,16 +123,29 @@ cd 3rd-party/opencv
 └─...
 ```
 
-准备好上述文件后，我们开始进行编译
-```bash
+之后就可以根据系统来开始编译Opencv
+- [ ] [为 Linux 编译 Opencv](#为-linux-编译-opencv)
+- [ ] [为 MacOS 编译 Opencv](#为-macos-编译-opencv)
+- [x] [为 Windows 编译 Opencv](#为-windows-编译-opencv)
+
+#### 为 Linux 编译 Opencv
+#### 为 MacOS 编译 Opencv
+#### 为 Windows 编译 Opencv
+
+
+
+
+
+准备好上述文件后，我们开始进行“尝试”编译
+```bat
 cd opencv-<OpenCV_VERSION>
 mkdir build
 cd build
-cmake .. -G "MinGW Makefiles" -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-4.5.2/modules
+cmake .. -G "MinGW Makefiles"
 ```
 
 在上述cmake构建项目的过程中，你会在终端看到一些“不和谐”的输出：
-```bash
+```bat
 -- FFMPEG: Download: ffmpeg_version.cmake
 -- Try 1 failed
 --
@@ -136,32 +161,13 @@ CMake Warning at cmake/OpenCVDownload.cmake:202 (message):
 
 
   .../CMake/3rd-party/opencv/opencv-4.5.3/build/CMakeDownloadLog.txt
-
-
-Call Stack (most recent call first):
-  3rdparty/ffmpeg/ffmpeg.cmake:20 (ocv_download)
-  modules/videoio/cmake/detect_ffmpeg.cmake:14 (download_win_ffmpeg)
-  modules/videoio/cmake/init.cmake:7 (include)
-  modules/videoio/cmake/init.cmake:18 (add_backend)
-  cmake/OpenCVModule.cmake:298 (include)
-  cmake/OpenCVModule.cmake:361 (_add_modules_1)
-  modules/CMakeLists.txt:7 (ocv_glob_modules)
 ```
 这表示有一些文件没有被下载，这是由于“网速”原因。为了解决这个问题，你可以在 [build/CMakeDownloadLog.txt](build/CMakeDownloadLog.txt) 文件中查看哪些文件需要被下载、下载链接以及放置目录，例如
 ```txt
 #do_copy "ffmpeg_version.cmake" "8862c87496e2e8c375965e1277dee1c7" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/213fcd5d4897319a83207406036c4a5957fba010/ffmpeg/ffmpeg_version.cmake" ".../CMake/3rd-party/opencv/opencv-4.5.3/build/3rdparty/ffmpeg"
 #check_md5 ".../CMake/3rd-party/opencv/opencv-4.5.3/build/3rdparty/ffmpeg/ffmpeg_version.cmake"
 #mismatch_md5 ".../CMake/3rd-party/opencv/opencv-4.5.3/build/3rdparty/ffmpeg/ffmpeg_version.cmake" "f8e65dbe4a3b4eedc0d2997e07c3f3fd"
-#check_md5 ".../CMake/3rd-party/opencv/opencv-4.5.3/.cache/ffmpeg/8862c87496e2e8c375965e1277dee1c7-ffmpeg_version.cmake"
-#mismatch_md5 ".../CMake/3rd-party/opencv/opencv-4.5.3/.cache/ffmpeg/8862c87496e2e8c375965e1277dee1c7-ffmpeg_version.cmake" "d41d8cd98f00b204e9800998ecf8427e"
-#delete ".../CMake/3rd-party/opencv/opencv-4.5.3/.cache/ffmpeg/8862c87496e2e8c375965e1277dee1c7-ffmpeg_version.cmake"
-#cmake_download ".../CMake/3rd-party/opencv/opencv-4.5.3/.cache/ffmpeg/8862c87496e2e8c375965e1277dee1c7-ffmpeg_version.cmake" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/213fcd5d4897319a83207406036c4a5957fba010/ffmpeg/ffmpeg_version.cmake"
-#try 1
-# timeout on name lookup is not supported
-# getaddrinfo(3) failed for raw.githubusercontent.com:443
-# Could not resolve host: raw.githubusercontent.com
-# Closing connection 0
-# 
+...
 ```
 找到 `#do_copy` 一行，会看到需要下载的文件`ffmpeg_version.cmake`，以及下载链接`https://raw.githubusercontent.com/.../ffmpeg_version.cmake`，并且可以看到需要将该文件放置到目录下`.../build/3rdparty/ffmpeg`
 
@@ -216,64 +222,62 @@ Call Stack (most recent call first):
 
 编译前请仔细查看[编译脚本`opencv/build-opencv.*`](docs/opencv/build-opencv.sh)，需要修改：
 - OpenCV的版本 `OPENCV_VERSION`
-- CMake的编译选项 `-D`，例如：
+- **CMake的编译选项 `-D`，可以参考 [OpenCV compile configuration options reference](https://docs.opencv.org/4.5.2/db/d05/tutorial_config_reference.html) 。**   
+  有一些编译选项在官方也并没有列举出来，那么这时候，为了查看完整的编译选项，可以使用`cmake-gui`来构建项目，并且可以通过UI界面来查看当前版本下全部编译选项。     
+  比较重要的几个编译选项，例如：
   - `-D CMAKE_INSTALL_PREFIX=~/Programs/opencv`: **Opencv需要安装的位置**（这里推荐安装到用户目录下），便于之后CMake项目链接OpenCV库
   - `-D BUILD_opencv_python2=OFF`,`-D BUILD_opencv_python3=OFF`: 该项目不编译python版本的opencv，如果需要为python安装opencv，建议`pip3 install opencv-python`，如果需要处理与视频相关的操作，那么才需要用该项目编译python版本的opencv
-  - ... (更多编译选项参考 [OpenCV compile configuration options reference](https://docs.opencv.org/4.5.2/db/d05/tutorial_config_reference.html))
-- 编译使用的线程数`-j`，默认是8线程编译`make -j8`，根据电脑配置进行修改，单线程则是`make`，十六线程则是`make -j16`
-```bash
-OPENCV_VERSION=4.5.1
+- **编译使用的线程数`-j`**，默认是8线程编译`make -j8`，根据电脑配置进行修改，单线程则是`make`，十六线程则是`make -j16`。**当出现编译错误的时候，首先考虑修改编译线程数为单线程编译，重新进行编译，有概率能够解决问题。**
 
-cd opencv-${OPENCV_VERSION}
 
-mkdir build
+```bat
+set CV_VERSION=4.5.3
 
-mkdir build/3rdparty/ffmpeg
-cp ../download/*.cmake build/3rdparty/ffmpeg/
-cp ../download/*.dll  build/3rdparty/ffmpeg/
+cd opencv-%CV_VERSION%
 
-mkdir build/downloads/wechat_qrcode
-cp ../download/*.caffemodel   build/downloads/wechat_qrcode
-cp ../download/*.prototxt     build/downloads/wechat_qrcode
+md build
 
-mkdir build/downloads/xfeatures2d/
-cp ../download/*.i build/downloads/xfeatures2d/
+md build\3rdparty\ffmpeg
+copy ..\download\*.cmake build\3rdparty\ffmpeg\
+copy ..\download\*.dll  build\3rdparty\ffmpeg\
 
-mkdir build/testdata/cv/face/
-cp ../download/face_landmark_model.dat build/testdata/cv/face/
+md build\downloads\wechat_qrcode
+copy ..\download\*.caffemodel   build\downloads\wechat_qrcode
+copy ..\download\*.prototxt     build\downloads\wechat_qrcode
+
+md build\downloads\xfeatures2d\
+copy ..\download\*.i build\downloads\xfeatures2d\
+
+md build\testdata\cv\face\
+copy ..\download\face_landmark_model.dat build\testdata\cv\face\
 
 cd build
 
-cmake .. \
-    -G "MinGW Makefiles" \
-    -D CMAKE_INSTALL_PREFIX=~/Programs/opencv \
-    -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-${OPENCV_VERSION}/modules \
-    -D OPENCV_GENERATE_PKGCONFIG=ON \
-    -D CMAKE_BUILD_TYPE=Release \
-    -D BUILD_opencv_python2=OFF \
-    -D BUILD_opencv_python3=OFF \
-    -D BUILD_SHARED_LIBS=ON\
-    -D WITH_CUDA=ON \
-    -D OPENCV_DNN_CUDA=ON \
-    -D WITH_ONNX=ON \
+cmake .. ^
+    -G "MinGW Makefiles" ^
+    -D CMAKE_INSTALL_PREFIX=~/Programs/opencv ^
+    -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-%CV_VERSION%/modules ^
+    -D OPENCV_GENERATE_PKGCONFIG=ON ^
+    -D CMAKE_BUILD_TYPE=Release ^
+    -DBUILD_opencv_python2=OFF ^
+    -DBUILD_opencv_python3=OFF ^
+    -D BUILD_SHARED_LIBS=ON^
+    -D WITH_CUDA=OFF ^
+    -D OPENCV_DNN_CUDA=OFF ^
+    -D WITH_ONNX=OFF ^
     -D WITH_1394=OFF
 make -j8
 make install
 ```
 
 修改脚本以适配你的设备，随后可以简单的用脚本进行编译：
-- 在Windows下
-  ```bash
-  ./build-opencv.bat
-  ```
-- 在 Linux/MacOS下
-  ```bash
-  bash build-opencv.sh
-  ```
+```bat
+./build-opencv.bat
+```
 
 编译完成之后需要检查安装目录，也就是编译选项中的`CMAKE_INSTALL_PREFIX` (`~/Programs/opencv`)，安装目录应该如下：
-```bash
-C:.
+```bat
+.
 ├─bin
 ├─etc
 ├─include
