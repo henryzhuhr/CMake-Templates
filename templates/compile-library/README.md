@@ -5,9 +5,12 @@
   - [编译库](#编译库)
 # 项目结构
 ```bash
-├─app
+.
 ├─include
+│  └─myClass.h
 ├─src
+│  ├─CMakeLists.txt
+│  └─myClass.cpp
 └─CMakeLists.txt
 ```
 
