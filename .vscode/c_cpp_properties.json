@@ -4,8 +4,8 @@
             "name": "Win64",
             "includePath": [
                 "${workspaceFolder}/**",
-                // "${workspaceFolder}/include",
-                "C:/Users/Henryzhu/Programs/opencv/include"
+                "C:/Users/Henryzhu/Programs/opencv/include",
+                "C:/Users/Henryzhu/Programs/boost/include"
             ],
             "defines": [
                 "_DEBUG",

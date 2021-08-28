@@ -6,5 +6,6 @@ class myClass
     /* data */
   public:
     myClass(/* args */);
+    explicit myClass(int number);
     ~myClass();
 };
