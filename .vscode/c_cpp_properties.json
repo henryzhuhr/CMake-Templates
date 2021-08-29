@@ -4,15 +4,16 @@
             "name": "Win64",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/Users/Henryzhu/Programs/opencv/include",
-                "C:/Users/Henryzhu/Programs/boost/include"
+                "~/Programs/opencv/include",
+                "~/Programs/boost/include"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
-                "_UNICODE"
+                "IS_WINDOWS",
+                "IS_MACOS"
             ],
-            "compilerPath": "${workspaceFolder}/tools/mingw64/bin/gcc.exe",
+            "compilerPath": "~/Programs/mingw64/bin/gcc.exe",
             "cStandard": "c11",
             "cppStandard": "c++11",
             "intelliSenseMode": "gcc-x64",
