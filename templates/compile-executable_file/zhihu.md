@@ -1,5 +1,6 @@
-# 编译可执行文件
-- [编译可执行文件](#编译可执行文件)
+#! https://zhuanlan.zhihu.com/p/419563896
+# 【CMake】编译可执行文件
+- [【CMake】编译可执行文件](#cmake编译可执行文件)
   - [项目结构](#项目结构)
   - [配置项目](#配置项目)
   - [配置编译可执行文件](#配置编译可执行文件)
@@ -16,7 +17,7 @@
 ```
 
 ## 配置项目
-在当前目录下的 [`CMakeLists.txt`](CMakeLists.txt) 为整个项目做一些基本配置，包括项目所需CMake最低版本、项目名称、编译器等
+在当前目录下的 `CMakeLists.txt` 为整个项目做一些基本配置，包括项目所需CMake最低版本、项目名称、编译器等
 ```cmake
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 project(Compile_Executable_File LANGUAGES CXX)
@@ -41,15 +42,25 @@ project(Compile_Executable_File LANGUAGES CXX)
 add_subdirectory(app)
 ```
 
+</br>
+
+**根目录下的 `CMakeLists.txt`完整文件**
+```cmake
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+project(Compile_Executable_File LANGUAGES CXX)
+add_subdirectory(app)
+```
+
+
 
 ## 配置编译可执行文件
-在 `app` 目录下的 [`CMakeLists.txt`](app/CMakeLists.txtC) 配置编译可执行文件
+在 `app` 目录下的 `CMakeLists.txt` 配置编译可执行文件
   
 设置可执行文件输出路径 `EXECUTABLE_OUTPUT_PATH` 为 `${PROJECT_SOURCE_DIR}/bin`
 ```cmake
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 ```
-> `PROJECT_SOURCE_DIR` 是一个默认的变量，这个变量是和根目录下的 [`CMakeLists.txt`](CMakeLists.txt) 相同目录，或者说是与包含了设置项目名称 `project()` 的 [`CMakeLists.txt`](CMakeLists.txt) 目录是相同的
+> `PROJECT_SOURCE_DIR` 是一个默认的变量，这个变量是和根目录下的 `CMakeLists.txt` 相同目录，或者说是与包含了设置项目名称 `project()` 的 `CMakeLists.txt` 目录是相同的
 
 `add_executable` 将通过编译源文件 `main.cpp` 来创建一个可执行文件 `compile-executable_file(.exe)`
 ```bash
@@ -59,6 +70,17 @@ add_executable(${PROJECT_NAME} main.cpp)
 > 你也可以指定输出的名称为项目名称 `${PROJECT_NAME}` ，也就是在 `project()` 指定的项目名称
 
 编写完项目的全部 `CMakeLists.txt` 文件后，接下来就是如何构建并且编译项目
+
+
+
+</br>
+
+**`app` 目录下的 `CMakeLists.txt`完整文件**
+```cmake
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+add_executable(compile-executable_file main.cpp)
+```
+
 
 
 ## 构建项目和生成构建器
@@ -109,6 +131,5 @@ make
 cmake --build .
 ```
 
-生成的项目就会在 `${PROJECT_SOURCE_DIR}/bin` 下，也就是 [`bin`](bin)。如果不通过 `set(EXECUTABLE_OUTPUT_PATH ...)` 来指定输出目录，那么文件会被输出到 `build` 目录下
-
+生成的项目就会在 `${PROJECT_SOURCE_DIR}/bin` 下，也就是 `bin`。如果不通过 `set(EXECUTABLE_OUTPUT_PATH ...)` 来指定输出目录，那么文件会被输出到 `build` 目录下
 

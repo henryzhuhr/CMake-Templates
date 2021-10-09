@@ -1,5 +1,6 @@
-# 编译和链接静态库和动态库
-- [编译和链接静态库和动态库](#编译和链接静态库和动态库)
+#! https://zhuanlan.zhihu.com/p/419564004
+# 【CMake】编译和链接静态库和动态库
+- [【CMake】编译和链接静态库和动态库](#cmake编译和链接静态库和动态库)
 - [项目结构](#项目结构)
 - [工作原理](#工作原理)
   - [编译库](#编译库)
@@ -23,9 +24,9 @@
   - **静态库**为 `STATIC`
 - 剩下的参数是需要编译进库的源码
 
-在 [`src/CMakeLists.txt`](src/CMakeLists.txt) 中我们可以看到编译 `myClass` 为一个库
+在 `src/CMakeLists.txt` 中我们可以看到编译 `myClass` 为一个库
 
-当代码有多个源代码之后，为了方便，我们将全部源代码添加到一个变量下。例如将 [`src`](src) 目录下的全部源码添加到变量 `myClass_src` 内 
+当代码有多个源代码之后，为了方便，我们将全部源代码添加到一个变量下。例如将 `src` 目录下的全部源码添加到变量 `myClass_src` 内 
 ```cmake
 aux_source_directory(.  myClass_src)
 ```
