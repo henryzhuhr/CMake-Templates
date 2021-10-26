@@ -12,7 +12,8 @@
 - [编译一些有用的第三方库](#编译一些有用的第三方库)
   - [gflags](#gflags)
 - [常见的工具](#常见的工具)
-  - [Clang-Format](#clang-format)
+  - [CMake](#cmake-1)
+  - [Clang](#clang)
     - [Download](#download)
     - [Usage](#usage)
   - [git](#git)
@@ -59,7 +60,11 @@ download gflags in [GitHub](https://github.com/gflags/gflags), see ["Installing 
 
 
 # 常见的工具
-## Clang-Format
+## CMake
+添加环境变量 `CMAKE_GENERATOR` 到系统中，值为 `MinGW Makefiles` 
+
+
+## Clang
 ### Download
 In [LLVM](https://llvm.org/builds/) official website, 
 choose corresponding **Clang-Format** [Release](https://releases.llvm.org/) for your OS in **Other builds**. 
