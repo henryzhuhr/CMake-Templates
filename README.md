@@ -91,6 +91,7 @@ clang-format -i test.c
 ```
 
 see [Clang documentation](https://clang.llvm.org/docs/ClangFormat.html) for more detail of using Clang-Format
+- [Clang Format Style Options](https://clang.llvm.org/docs/ClangFormatStyleOptions.html)
 
 
 
